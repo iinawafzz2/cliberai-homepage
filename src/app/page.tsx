@@ -35,13 +35,6 @@ export default function Home() {
           <div className="absolute bottom-1/4 left-[20%] w-16 h-px bg-gradient-to-r from-transparent via-brand-green/15 to-transparent" />
 
           <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-24">
-            <div className="animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-cream-dark text-sm text-gray-500 mb-8 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" aria-hidden="true" />
-                Building domain-specific AI
-              </div>
-            </div>
-
             <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-gray-900 leading-[0.95] mb-8 animate-fade-in-up-delay-1">
               Intelligence,
               <br />
