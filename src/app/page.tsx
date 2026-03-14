@@ -23,58 +23,61 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden grid-pattern">
+        <section className="relative pt-32 pb-16 overflow-hidden grid-pattern">
           <div className="absolute top-20 right-[15%] w-72 h-72 bg-brand-green/5 rounded-full blur-3xl animate-float" />
           <div
             className="absolute bottom-32 left-[10%] w-96 h-96 bg-brand-orange/5 rounded-full blur-3xl animate-float"
             style={{ animationDelay: "3s" }}
           />
 
-          <div className="absolute top-1/4 left-[8%] w-px h-32 bg-gradient-to-b from-transparent via-brand-green/20 to-transparent" />
-          <div className="absolute top-1/3 right-[12%] w-px h-24 bg-gradient-to-b from-transparent via-brand-orange/20 to-transparent" />
-          <div className="absolute bottom-1/4 left-[20%] w-16 h-px bg-gradient-to-r from-transparent via-brand-green/15 to-transparent" />
-
-          <div className="relative z-10 max-w-4xl mx-auto px-6 text-center pt-24">
-            <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-gray-900 leading-[0.95] mb-8 animate-fade-in-up-delay-1">
+          <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl font-medium tracking-tight text-gray-900 leading-[0.95] mb-6 animate-fade-in-up-delay-1">
               Intelligence,
               <br />
               <span className="text-brand-orange">Specialized.</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed font-arabic animate-fade-in-up-delay-2">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed font-arabic animate-fade-in-up-delay-2">
               We don&apos;t build general-purpose AI. We build systems that
               master specific domains — understanding the rules, the context, and
               the stakes that matter.
             </p>
+          </div>
+        </section>
 
-            <div className="animate-fade-in-up-delay-3">
-              <a
-                href="https://www.saudi-judge.cliberai.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-brand-green hover:bg-brand-green-dark text-white rounded-2xl text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl animate-pulse-glow hover:scale-[1.02]"
-              >
-                <span>Try Saudi Judge</span>
-                <svg
-                  className="w-5 h-5 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  aria-hidden="true"
+        <section className="relative px-6 pb-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-cream-dark/50 animate-fade-in-up-delay-3">
+              <iframe
+                src="https://www.saudi-judge.cliberai.com"
+                title="Saudi Judge Interface"
+                className="w-full h-[500px] sm:h-[600px] pointer-events-none"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/10 flex items-end justify-center pb-12">
+                <a
+                  href="https://www.saudi-judge.cliberai.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-brand-green hover:bg-brand-green-dark text-white rounded-2xl text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </a>
-              <p className="mt-4 text-sm text-gray-500">
-                AI-powered Saudi legal judgment prediction
-              </p>
+                  <span>Try Saudi Judge</span>
+                  <svg
+                    className="w-5 h-5 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </a>
+              </div>
             </div>
-
           </div>
         </section>
 
