@@ -3,14 +3,12 @@ export default function Home() {
     <div className="min-h-screen bg-cream">
       <header className="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b border-cream-dark/50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img
-              src="/favicon.svg"
-              alt="Cliber AI logo"
-              className="w-10 h-10 rounded-xl shadow-sm"
-            />
-            <span className="text-xl font-heading font-medium tracking-tight text-gray-900">
-              Cliber AI
+          <div className="group/logo flex items-center h-10 rounded-xl bg-white border border-cream-dark shadow-sm overflow-hidden cursor-default transition-all duration-300 w-10 hover:w-[140px]">
+            <div className="flex items-center justify-center min-w-10 h-10">
+              <span className="text-brand-orange font-heading text-2xl leading-none">C</span>
+            </div>
+            <span className="text-sm font-heading font-medium tracking-tight text-gray-900 whitespace-nowrap opacity-0 group-hover/logo:opacity-100 transition-opacity duration-300 pr-3">
+              liber AI
             </span>
           </div>
           <a
