@@ -11,7 +11,7 @@ A single-page homepage for cliberai.com built with Next.js 16, TypeScript, and T
 - **Port**: 5000 (required by Replit for webview)
 
 ## i18n / Language Support
-- Languages: English (en), Arabic (ar), French (fr), German (de)
+- Languages: English (en), Arabic (ar), French (fr), German (de), Japanese (ja), Chinese (zh), Korean (ko)
 - `src/app/translations.ts` — All UI strings in 4 languages + language metadata (dir, flags) + theme type
 - `src/app/LanguageProvider.tsx` — React context for language & theme state, persists to localStorage
 - `src/app/SettingsModal.tsx` — Settings dropdown with theme picker and language picker (gear icon in header)

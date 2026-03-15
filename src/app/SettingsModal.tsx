@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "./LanguageProvider";
 import { type Lang, type Theme, langMeta } from "./translations";
 
-const langs: Lang[] = ["en", "ar", "fr", "de"];
+const langs: Lang[] = ["en", "ar", "fr", "de", "ja", "zh", "ko"];
 const themes: { value: Theme; labelKey: string; icon: JSX.Element }[] = [
   {
     value: "system",
@@ -35,15 +35,19 @@ const themes: { value: Theme; labelKey: string; icon: JSX.Element }[] = [
   },
 ];
 
+type Section = null | "language" | "theme";
+
 export default function SettingsButton() {
   const { lang, setLang, t, theme, setTheme } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [section, setSection] = useState<Section>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         setOpen(false);
+        setSection(null);
       }
     }
     if (open) document.addEventListener("mousedown", handleClick);
@@ -52,16 +56,27 @@ export default function SettingsButton() {
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        if (section) {
+          setSection(null);
+        } else {
+          setOpen(false);
+        }
+      }
     }
     if (open) document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [open]);
+  }, [open, section]);
+
+  const currentTheme = themes.find((th) => th.value === theme);
 
   return (
     <div className="relative" ref={modalRef}>
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          setOpen(!open);
+          setSection(null);
+        }}
         className="p-2 rounded-lg text-gray-500 hover:text-brand-green hover:bg-brand-green/5 transition-all dark:text-gray-400 dark:hover:text-brand-green"
         aria-label={t("settings")}
         aria-expanded={open}
@@ -73,61 +88,116 @@ export default function SettingsButton() {
       </button>
 
       {open && (
-        <div className="absolute top-full mt-2 end-0 w-64 bg-white dark:bg-neutral-900 rounded-xl shadow-xl border border-cream-dark/50 dark:border-neutral-700 overflow-hidden z-50 animate-fade-in-up">
-          <div className="px-4 py-3 border-b border-cream-dark/50 dark:border-neutral-700">
-            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">{t("settings")}</h3>
+        <div className="absolute top-full mt-2 end-0 w-72 bg-white dark:bg-neutral-900 rounded-xl shadow-xl border border-cream-dark/50 dark:border-neutral-700 overflow-hidden z-50 animate-fade-in-up">
+          <div className="px-4 py-3 border-b border-cream-dark/50 dark:border-neutral-700 flex items-center gap-2">
+            {section && (
+              <button
+                onClick={() => setSection(null)}
+                className="p-1 -ms-1 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              >
+                <svg className="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+            )}
+            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              {section === "language" ? t("language") : section === "theme" ? t("theme") : t("settings")}
+            </h3>
           </div>
 
-          <div className="p-3">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 px-1">{t("theme")}</p>
-            <div className="flex flex-col gap-1 mb-3">
-              {themes.map((th) => (
-                <button
-                  key={th.value}
-                  onClick={() => setTheme(th.value)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
-                    theme === th.value
-                      ? "bg-brand-green/10 text-brand-green font-medium"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800"
-                  }`}
-                >
-                  {th.icon}
-                  <span>{t(th.labelKey)}</span>
-                  {theme === th.value && (
-                    <svg className="w-4 h-4 ms-auto text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  )}
-                </button>
-              ))}
-            </div>
+          {!section && (
+            <div className="p-2">
+              <button
+                onClick={() => setSection("language")}
+                className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800 transition-all"
+              >
+                <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" />
+                </svg>
+                <div className="flex-1 text-start">
+                  <span>{t("language")}</span>
+                </div>
+                <span className="text-xs text-gray-400 dark:text-gray-500">{langMeta[lang].flag} {langMeta[lang].label}</span>
+                <svg className="w-4 h-4 text-gray-400 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
 
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 px-1">{t("language")}</p>
-            <div className="flex flex-col gap-1">
-              {langs.map((l) => (
-                <button
-                  key={l}
-                  onClick={() => {
-                    setLang(l);
-                    setOpen(false);
-                  }}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
-                    lang === l
-                      ? "bg-brand-green/10 text-brand-green font-medium"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800"
-                  }`}
-                >
-                  <span className="text-lg">{langMeta[l].flag}</span>
-                  <span>{langMeta[l].label}</span>
-                  {lang === l && (
-                    <svg className="w-4 h-4 ms-auto text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
-                  )}
-                </button>
-              ))}
+              <button
+                onClick={() => setSection("theme")}
+                className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800 transition-all"
+              >
+                <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z" />
+                </svg>
+                <div className="flex-1 text-start">
+                  <span>{t("theme")}</span>
+                </div>
+                <span className="text-xs text-gray-400 dark:text-gray-500">{currentTheme ? t(currentTheme.labelKey) : ""}</span>
+                <svg className="w-4 h-4 text-gray-400 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
             </div>
-          </div>
+          )}
+
+          {section === "language" && (
+            <div className="p-2 max-h-80 overflow-y-auto">
+              <div className="flex flex-col gap-0.5">
+                {langs.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => {
+                      setLang(l);
+                      setSection(null);
+                    }}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
+                      lang === l
+                        ? "bg-brand-green/10 text-brand-green font-medium"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800"
+                    }`}
+                  >
+                    <span className="text-lg">{langMeta[l].flag}</span>
+                    <span>{langMeta[l].label}</span>
+                    {lang === l && (
+                      <svg className="w-4 h-4 ms-auto text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {section === "theme" && (
+            <div className="p-2">
+              <div className="flex flex-col gap-0.5">
+                {themes.map((th) => (
+                  <button
+                    key={th.value}
+                    onClick={() => {
+                      setTheme(th.value);
+                      setSection(null);
+                    }}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
+                      theme === th.value
+                        ? "bg-brand-green/10 text-brand-green font-medium"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800"
+                    }`}
+                  >
+                    {th.icon}
+                    <span>{t(th.labelKey)}</span>
+                    {theme === th.value && (
+                      <svg className="w-4 h-4 ms-auto text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
