@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-cream: #FAF8F5;
   --color-cream-dark: #F0EDE9;
@@ -19,6 +21,11 @@ html {
 body {
   background-color: #FAF8F5;
   color: #1a1a1a;
+}
+
+.dark body {
+  background-color: #0a0a0a;
+  color: #e5e5e5;
 }
 
 @keyframes float {
@@ -74,6 +81,12 @@ body {
     linear-gradient(rgba(0, 166, 107, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 166, 107, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
+}
+
+.dark .grid-pattern {
+  background-image:
+    linear-gradient(rgba(0, 166, 107, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 166, 107, 0.06) 1px, transparent 1px);
 }
 
 @media (prefers-reduced-motion: reduce) {
