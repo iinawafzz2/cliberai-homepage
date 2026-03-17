@@ -77,7 +77,7 @@ export default function SettingsButton() {
           setOpen(!open);
           setSection(null);
         }}
-        className="p-2 rounded-lg text-gray-500 hover:text-brand-green hover:bg-brand-green/5 transition-all dark:text-gray-400 dark:hover:text-brand-green"
+        className="p-2 rounded-lg text-gray-500 hover:text-brand-orange hover:bg-brand-orange/5 transition-all dark:text-gray-400 dark:hover:text-brand-orange"
         aria-label={t("settings")}
         aria-expanded={open}
       >
@@ -153,14 +153,14 @@ export default function SettingsButton() {
                     }}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
                       lang === l
-                        ? "bg-brand-green/10 text-brand-green font-medium"
+                        ? "bg-brand-orange/10 text-brand-orange font-medium"
                         : "text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800"
                     }`}
                   >
                     <span className="text-lg">{langMeta[l].flag}</span>
                     <span>{langMeta[l].label}</span>
                     {lang === l && (
-                      <svg className="w-4 h-4 ms-auto text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="w-4 h-4 ms-auto text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                       </svg>
                     )}
@@ -182,14 +182,14 @@ export default function SettingsButton() {
                     }}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
                       theme === th.value
-                        ? "bg-brand-green/10 text-brand-green font-medium"
+                        ? "bg-brand-orange/10 text-brand-orange font-medium"
                         : "text-gray-700 dark:text-gray-300 hover:bg-cream dark:hover:bg-neutral-800"
                     }`}
                   >
                     {th.icon}
                     <span>{t(th.labelKey)}</span>
                     {theme === th.value && (
-                      <svg className="w-4 h-4 ms-auto text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="w-4 h-4 ms-auto text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                       </svg>
                     )}
